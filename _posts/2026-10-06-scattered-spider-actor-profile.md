@@ -5,18 +5,31 @@ date: 2026-10-06
 categories: threat-intelligence
 ---
 
-*Every claim below is tied to a public source and graded for confidence. Where vendors disagree, I
-say so. TLP:WHITE — open sources only.*
+| | |
+|---|---|
+| **Product** | Actor profile |
+| **Handling** | TLP:WHITE — open sources only |
+| **Version** | 2.0 (2026-10-09) |
+| **Review trigger** | New government advisory, MITRE ATT&CK update, vendor re-assessment, or law-enforcement action |
+| **Author** | Martín Eliseo |
+
+*Every claim below carries a source and is graded on two independent axes. Where vendors disagree, I
+say so.*
 
 ## How to read this
 
-I use four confidence levels, and I apply them per claim, not per section:
+Two axes are graded separately, per claim — not per section:
 
-- **Confirmed** — corroborated by two or more independent authoritative sources (a government
-  advisory, MITRE ATT&CK, or multiple vendors).
-- **Probable** — reported by a single credible source and consistent with the actor's known tradecraft.
-- **Context only** — reported or self-claimed, but not independently corroborated.
-- **Unverified** — could not be substantiated, stated so it does not get repeated as fact.
+- **Confidence** — how good the sourcing and the reasoning are: **High** (corroborated by two or more
+  independent authoritative sources), **Moderate** (one credible source, or corroboration with gaps),
+  **Low** (single-source, self-claimed, or heavily inferential).
+- **Probability** — how likely the assessed outcome is, stated only where the claim is estimative:
+  *nearly certain*, *very likely*, *likely*, *roughly even chance*, *unlikely*, *very unlikely*.
+
+They are not the same thing. A claim can be *very likely* at *low confidence* (a single source) or
+*roughly even* at *high confidence* (strong data, genuine uncertainty). Purely factual claims are
+graded for confidence only and carry *n/a* for probability. **Unverified** means it could not be
+substantiated, and is recorded so it is not repeated as fact.
 
 ## Bottom line
 
@@ -47,25 +60,25 @@ CISA lists "UNC3944, Scatter Swine, Oktapus, Octo Tempest, Storm-0875, and Muddl
 of Scattered Spider [1]; MITRE records them as **Associated Groups** [2], which is explicitly weaker
 than "same actor".
 
-**Caveat — Context only.** These designations are not universally treated as co-referential. Public
+**Caveat — low confidence.** These designations are not universally treated as co-referential. Public
 analysis notes that the shared 0ktapus phishing kit was reused by multiple actors, and some vendor
 assessments go as far as treating Muddled Libra as a distinct cluster despite overlapping tradecraft.
 Read the aliases as an **overlapping cluster, not a verified single identity** [2][9].
 
 ## 2. Assessment ledger
 
-| Assessment | Confidence | Basis |
-|---|---|---|
-| Native-English-speaking, active since at least 2022 | Confirmed | [2] |
-| Initial access via help-desk vishing + MFA bypass (push bombing, SIM swap) | Confirmed | [1][2] |
-| Abuse of legitimate RMM tools (AnyDesk, TeamViewer, ScreenConnect, Splashtop, Tailscale, Teleport.sh…) | Confirmed | [1] |
-| Registers its own MFA tokens; historically adds a federated IdP to the SSO tenant | Confirmed | [1] |
-| Hypervisor (vCenter/ESXi) operations | Confirmed | [2][3] |
-| Ransomware: BlackCat, and DragonForce from 2025 | Confirmed | [1][2] |
-| Sector "wave" targeting (retail, insurance, airlines) | Probable | [3][4] |
-| 2025 arrests slowed the group | Probable | [5] |
-| "Scattered Lapsus$ Hunters" = Scattered Spider + Lapsus$ + ShinyHunters | Context only | [6][7][8] |
-| The ~1 billion-record Salesforce claim | Context only (disputed) | [6][7] |
+| Assessment | Confidence | Probability | Basis |
+|---|---|---|---|
+| Native-English-speaking, active since at least 2022 | High | n/a | [2] |
+| Initial access via help-desk vishing + MFA bypass (push bombing, SIM swap) | High | n/a | [1][2] |
+| Abuse of legitimate RMM tools (AnyDesk, TeamViewer, ScreenConnect, Splashtop, Tailscale, Teleport.sh…) | High | n/a | [1] |
+| Registers its own MFA tokens; historically adds a federated IdP to the SSO tenant | High | n/a | [1] |
+| Hypervisor (vCenter/ESXi) operations | High | n/a | [2][3] |
+| Ransomware: BlackCat, and DragonForce from 2025 | High | n/a | [1][2] |
+| Sector "wave" targeting (retail, insurance, airlines) | Moderate | likely | [3][4] |
+| 2025 arrests slowed the group | Moderate | likely | [5] |
+| "Scattered Lapsus$ Hunters" = Scattered Spider + Lapsus$ + ShinyHunters | Low | roughly even chance | [6][7][8] |
+| The ~1 billion-record Salesforce claim | Low | unlikely | [6][7] |
 
 ## 3. Tradecraft
 
@@ -103,7 +116,7 @@ Initially CRM providers, business-process outsourcing, telecom and technology; f
 hospitality, retail, MSP, manufacturing and financial [2]. In 2025, a concentrated wave against UK
 retail and — per Google — US retail, airline and insurance [3][4].
 
-## 5. The "Scattered Lapsus$ Hunters" branding (2025) — Context only
+## 5. The "Scattered Lapsus$ Hunters" branding (2025) — low confidence
 
 A group self-branded **Scattered Lapsus$ Hunters** (also "Trinity of Chaos"), claiming to combine
 Scattered Spider, Lapsus$ and ShinyHunters, ran a large campaign against Salesforce customers using
@@ -153,6 +166,16 @@ What to look for, not a validated ruleset (consistent with the rule-provenance p
 - Nothing here is validated against private telemetry, and I did not analyse malware samples for this
   profile. This is an open-source assessment, and it is bounded by that.
 
+## 10. Outlook — what would change this judgement
+
+The confidence above is a snapshot; these events would move it:
+
+- A **new or revised advisory** (CISA AA23-320A, or MITRE ATT&CK group G1015) that merges the alias
+  cluster or splits it — the single strongest lever on the naming judgement.
+- Vendor reporting that **resolves Muddled Libra** as the same actor or as a distinct cluster.
+- Attribution of **"Scattered Lapsus$ Hunters"** beyond actor self-claims and TTP overlap.
+- Evidence the **ESXi/ransomware playbook** has changed (a new encryptor, or new hypervisor tradecraft).
+
 ## Sources
 
 1. CISA, FBI, RCMP, ASD/ACSC, AFP, CCCS, NCSC-UK — **Cybersecurity Advisory AA23-320A: Scattered
@@ -172,8 +195,15 @@ What to look for, not a validated ruleset (consistent with the rule-provenance p
 8. Computer Weekly — *ShinyHunters Salesforce cyber attacks explained* (11 Aug 2025).
    https://www.computerweekly.com/feature/ShinyHunters-Salesforce-cyber-attacks-explained-What-you-need-to-know
 9. Vendor tracking names and the non-equivalence caveat, as reported in public actor-profile
-   aggregations (secondary source; treated as Context only).
+   aggregations (secondary source; treated as low confidence).
 
 ---
 
 *All analysis is open-source. Views are my own.*
+
+## Revision history
+
+| Version | Date | Change |
+|---|---|---|
+| 1.0 | 2026-10-06 | First release. |
+| 2.0 | 2026-10-09 | Split confidence and probability into two axes; added the product header, the outlook and this history. No assessed fact changed. |

@@ -5,18 +5,31 @@ date: 2026-10-07
 categories: threat-intelligence
 ---
 
-*Every claim below is tied to a public source and graded for confidence. Where vendors disagree, I
-say so. TLP:WHITE — open sources only.*
+| | |
+|---|---|
+| **Product** | Actor profile |
+| **Handling** | TLP:WHITE — open sources only |
+| **Version** | 2.0 (2026-10-09) |
+| **Review trigger** | MITRE ATT&CK or government update, a confirmed disruptive effect, or new edge-device exploitation |
+| **Author** | Martín Eliseo |
+
+*Every claim below carries a source and is graded on two independent axes. Where vendors disagree, I
+say so.*
 
 ## How to read this
 
-I use four confidence levels, and I apply them per claim, not per section:
+Two axes are graded separately, per claim — not per section:
 
-- **Confirmed** — corroborated by two or more independent authoritative sources (a government
-  advisory, MITRE ATT&CK, or multiple vendors).
-- **Probable** — reported by a single credible source and consistent with the actor's known tradecraft.
-- **Context only** — reported or self-claimed, but not independently corroborated.
-- **Unverified** — could not be substantiated, stated so it does not get repeated as fact.
+- **Confidence** — how good the sourcing and the reasoning are: **High** (corroborated by two or more
+  independent authoritative sources), **Moderate** (one credible source, or corroboration with gaps),
+  **Low** (single-source, self-claimed, or heavily inferential).
+- **Probability** — how likely the assessed outcome is, stated only where the claim is estimative:
+  *nearly certain*, *very likely*, *likely*, *roughly even chance*, *unlikely*, *very unlikely*.
+
+They are not the same thing. A claim can be *very likely* at *low confidence* (a single source) or
+*roughly even* at *high confidence* (strong data, genuine uncertainty). Purely factual claims are
+graded for confidence only and carry *n/a* for probability. **Unverified** means it could not be
+substantiated, and is recorded so it is not repeated as fact.
 
 ## Bottom line
 
@@ -53,26 +66,26 @@ MITRE records these as **Associated Groups** [3], which is explicitly weaker tha
 CISA lists Vanguard Panda, BRONZE SILHOUETTE, Dev-0391, UNC3236, Voltzite and Insidious Taurus as
 aliases in its advisory [1].
 
-**Caveat — Context only.** Not every tracking name is asserted to be the same actor. Dragos's
+**Caveat — low confidence.** Not every tracking name is asserted to be the same actor. Dragos's
 VOLTZITE is described as sharing "extensive technical overlaps" with Volt Typhoon rather than being
 declared identical [7], and it is Dragos's analyst designation for the OT-facing activity. Read the
 OT reporting as an **overlapping cluster**, not a single verified entity [3][7].
 
 ## 2. Assessment ledger
 
-| Assessment | Confidence | Basis |
-|---|---|---|
-| PRC state-sponsored, active since at least 2021 | Confirmed | [1][3] |
-| Targets communications, energy, transportation and water/wastewater in the US and its territories, including Guam | Confirmed | [1] |
-| Assessed as pre-positioning for disruptive or destructive attacks against OT | Confirmed | [1][3] |
-| Living-off-the-land tradecraft: stolen credentials, `wmic`/`ntdsutil`/`netsh`/PowerShell, minimal custom malware | Confirmed | [1][3] |
-| Uses compromised SOHO routers (KV Botnet and successors) to proxy C2 and obscure origin | Confirmed | [1][6][8] |
-| Exploited the Versa Director zero-day CVE-2024-39717 with the VersaMem web shell | Confirmed | [3][9] |
-| Deployed the SockDetour backdoor in at least one intrusion | Probable | [10] |
-| Initial access increasingly brokered by SYLVANITE and handed to Volt Typhoon/VOLTZITE | Probable | [3][7] |
-| Reached Stage 2 of the ICS Cyber Kill Chain in 2025 (engineering workstations, cellular gateways) | Probable | [7] |
-| Operated by the PLA Cyberspace Force | Context only | [11] |
-| Dragos's VOLTZITE is the same actor as Volt Typhoon | Context only (overlap) | [3][7] |
+| Assessment | Confidence | Probability | Basis |
+|---|---|---|---|
+| PRC state-sponsored, active since at least 2021 | High | n/a | [1][3] |
+| Targets communications, energy, transportation and water/wastewater in the US and its territories, including Guam | High | n/a | [1] |
+| Assessed as pre-positioning for disruptive or destructive attacks against OT | High | likely | [1][3] |
+| Living-off-the-land tradecraft: stolen credentials, `wmic`/`ntdsutil`/`netsh`/PowerShell, minimal custom malware | High | n/a | [1][3] |
+| Uses compromised SOHO routers (KV Botnet and successors) to proxy C2 and obscure origin | High | n/a | [1][6][8] |
+| Exploited the Versa Director zero-day CVE-2024-39717 with the VersaMem web shell | High | n/a | [3][9] |
+| Deployed the SockDetour backdoor in at least one intrusion | Moderate | n/a | [10] |
+| Initial access increasingly brokered by SYLVANITE and handed to Volt Typhoon/VOLTZITE | Moderate | likely | [3][7] |
+| Reached Stage 2 of the ICS Cyber Kill Chain in 2025 (engineering workstations, cellular gateways) | Moderate | n/a | [7] |
+| Operated by the PLA Cyberspace Force | Low | n/a | [11] |
+| Dragos's VOLTZITE is the same actor as Volt Typhoon | Low | roughly even chance | [3][7] |
 
 ## 3. Tradecraft
 
@@ -126,8 +139,8 @@ to extract configuration files and alarm data, and specifically investigating wh
 conditions would trigger process shutdowns — reconnaissance of *how to disrupt*, not disruption
 itself [7]. Initial access is increasingly brokered: SYLVANITE weaponises edge-device vulnerabilities
 and hands footholds over for the deeper OT intrusion [3][7]. No publicly confirmed disruptive effect
-has been observed. **Confirmed** here is only that the actor has the access and is collecting the
-data; the disruptive end state remains an assessed intent [1][7].
+has been observed. What is **corroborated** here is only that the actor has the access and is
+collecting the data; the disruptive end state remains an assessed intent [1][7].
 
 ## 6. Disruption and current status
 
@@ -179,13 +192,22 @@ What to look for, not a validated ruleset (consistent with the rule-provenance p
 - Whether VOLTZITE (Dragos) and Volt Typhoon (Microsoft and the U.S. government) are one actor or an
   overlapping ecosystem; the naming is explicitly "technical overlap", not identity [3][7].
 - Unit-level attribution — the claim that the group is run by the PLA Cyberspace Force is public
-  reporting, not a government confirmation, and is treated as Context only [11].
+  reporting, not a government confirmation, and is treated as low confidence [11].
 - Whether the pre-positioning has translated into any confirmed disruptive or destructive effect.
   None is public; the disruptive end state is an assessed intent [1][7].
 - Victim enumeration is inherently incomplete — CISA's own framing is that what has been found is
   likely "the tip of the iceberg" [1].
 - Nothing here is validated against private telemetry, and I did not analyse malware samples for this
   profile. This is an open-source assessment, and it is bounded by that.
+
+## 10. Outlook — what would change this judgement
+
+- A **MITRE ATT&CK or government update** that merges or separates VOLTZITE and Volt Typhoon, or
+  reassigns the group/campaign IDs.
+- Any **publicly confirmed disruptive or destructive effect**; that would move the pre-positioning
+  judgement from assessed intent to observed action.
+- New **edge-device exploitation** (a fresh known-exploited CVE) or a new access-broker cluster.
+- A change in the **SOHO botnet** layer — successor infrastructure, or a takedown that holds.
 
 ## Sources
 
@@ -213,9 +235,16 @@ What to look for, not a validated ruleset (consistent with the rule-provenance p
    https://attack.mitre.org/campaigns/C0039
 10. Palo Alto Networks Unit 42 — **Threat Brief: Attacks on Critical Infrastructure Attributed to
     Insidious Taurus (Volt Typhoon)** (Feb 2024). https://unit42.paloaltonetworks.com/volt-typhoon-threat-brief/
-11. Public reporting on unit-level attribution of the group (secondary source; treated as Context
-    only).
+11. Public reporting on unit-level attribution of the group (secondary source; treated as low
+    confidence).
 
 ---
 
 *All analysis is open-source. Views are my own.*
+
+## Revision history
+
+| Version | Date | Change |
+|---|---|---|
+| 1.0 | 2026-10-07 | First release. |
+| 2.0 | 2026-10-09 | Split confidence and probability into two axes; added the product header, the outlook and this history. No assessed fact changed. |

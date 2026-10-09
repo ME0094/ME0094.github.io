@@ -9,3 +9,7 @@ kramdown:
   syntax_highlighter: rouge
 permalink: /:title/
 show_excerpts: true
+header_pages:
+  - about.md
+  - requirements.md
+  - method.md
