@@ -4,12 +4,15 @@ title: About
 permalink: /about/
 ---
 
-Cyber threat intelligence, written from open sources.
+Cyber threat intelligence: analysis, and the engineering that makes it hold up.
 
-I profile threat actors and analyse adversary tradecraft, and I care about the line between what the
-evidence supports and what it does not. Where I build tooling, I write about the methodology behind
-it — what a result shows, and what it does not.
+I profile threat actors and analyse adversary tradecraft from open sources, and I care
+about the line between what the evidence supports and what it does not. The same discipline
+runs through the tooling I build: a judgement carries its sources and its confidence, and
+it says what would change it.
 
+- Analysis: [actor profiles and structured assessments](/) 
+- Engineering: [the method, made executable](/engineering/)
 - GitHub: [github.com/ME0094](https://github.com/ME0094)
 - LinkedIn: [linkedin.com/in/martin-eliseo](https://www.linkedin.com/in/martin-eliseo/)
 
